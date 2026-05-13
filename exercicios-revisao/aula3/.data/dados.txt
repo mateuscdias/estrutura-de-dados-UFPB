@@ -1,0 +1,11 @@
+pessoa1 10
+pessoa2 45
+pessoa3 40
+pessoa4 42
+pessoa5 52
+pessoa6 12
+pessoa7 92
+pessoa8 20
+pessoa9 23
+pessoa10 12
+pessoa11 100
