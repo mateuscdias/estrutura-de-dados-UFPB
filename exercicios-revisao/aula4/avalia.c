@@ -45,7 +45,7 @@ int main(void){
 
     double x = 2.0;
     double poli[3] = {1,3,2};
-    int grau = 3;
+    int grau = 2;
 
     printf("P(%lf) = %lf\n",x,avalia(poli,grau,x));
 
