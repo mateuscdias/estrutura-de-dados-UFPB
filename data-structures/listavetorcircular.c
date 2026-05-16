@@ -72,11 +72,8 @@ int eh_cheia(lista_vet_circ *l){
     0 -> Caso contrario
     */
 
-    if ((l -> ctrf + 1)  == MAX_VETOR){
-
-        if (l -> ctri == 0){
-            return 1;
-        }
+    if(l->ctrf + 1 % MAX_VETOR == l->ctri){
+        return 1;
     }
 
     return 0;
