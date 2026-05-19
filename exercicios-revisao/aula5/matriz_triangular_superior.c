@@ -1,10 +1,10 @@
 /*
-Exercício - Programa para armazenar matrizes triangulares inferiores economizando memoria.
+Exercício - Programa para armazenar matrizes triangulares superiores economizando memoria.
 Disciplina: Estrutura de Dados
 Autor: Mateus Dias @mateuscdias
 Realizado em: 11/05/2026
 OBS.: O presente exercício faz parte do Livro "Introdução à Estrutura de Dados", de Waldemar Celes, Renato Cerqueira e José
-Lucas Rangel, na Pág. 115, Q. 4.2
+Lucas Rangel, na Pág. 115, Q. 4.3
 */
 
 #include <stdio.h>
@@ -14,9 +14,9 @@ Lucas Rangel, na Pág. 115, Q. 4.2
 int **cria_matriz(int m){
 
     /*
-    int **cria_matriz(int m)
+    int **cria_matriz(int m, int n)
 
-    Cria uma matriz triangular inferior de tamanho mxm  alocada dinamicamente
+    Cria uma matriz triangular superior de tamanho mxm  alocada dinamicamente
     de maneira a economizar a memoria.
 
     Vale ressaltar que toda matriz triangular é quadrada.
@@ -32,26 +32,22 @@ int **cria_matriz(int m){
     */
 
     int **p;
-    int i;
-
-    if(m <= 0){
-        return NULL;
-    }
-
-    p = (int **) malloc(m*sizeof(int*));
+    p = (int **)malloc(m*sizeof(int*));
 
     if(!p){
         return NULL;
     }
 
+    int i;
 
-    for(i = 0; i < m; i++){
+    for(i = 0; i<m;i++){
 
-        p[i] = (int*) malloc((i+1)*sizeof(int));
+        p[i] = (int*) malloc((m-i)*sizeof(int));
 
         if(!p[i]){
             break;
         }
+
     }
 
     if(i < m){
@@ -73,7 +69,7 @@ int libera_matriz(int **p, int m){
     /*
     int libera_matriz(int **p, int m)
 
-    Libera uma matriz triangular inferior alocada dinamicamente pela funcao cria_matriz
+    Libera uma matriz triangular superior alocada dinamicamente pela funcao cria_matriz
 
     Parametros:
 
@@ -106,7 +102,7 @@ int preenche_matriz(int **p, int m){
     /*
     int preenche_matriz(int **p, int m)
 
-    Preenche uma matriz triangular inferior alocada dinamicamente com valores aleatorios
+    Preenche uma matriz triangular superior alocada dinamicamente com valores aleatorios
 
     Parametros:
 
@@ -128,7 +124,7 @@ int preenche_matriz(int **p, int m){
     int i,j;
 
     for(i = 0; i<m;i++){
-        for(j = 0 ; j <= i; j++){
+        for(j = 0 ; j < m-i; j++){
 
             p[i][j] = rand() % 100;
         }
@@ -142,7 +138,7 @@ int acessa(int **p, int m, int i, int j){
     /*
     int acessa(int **p, int m, int i, int j)
 
-    Acessa o elemento de uma matriz triangular inferior alocada dinamicamente utilizando
+    Acessa o elemento de uma matriz triangular superior alocada dinamicamente utilizando
     cria_matriz
 
     Parametros:
@@ -162,41 +158,39 @@ int acessa(int **p, int m, int i, int j){
         return 0;
     }
 
-    if(j > i){
+    if(j < i){
         return 0;
     }
 
-    return p[i][j];
+    return p[i][j-i];
 }
 
 int main(void){
 
-    int **p = cria_matriz(5);
-    int preenchida;
-    int i,j;
+    int tam = 5;
+    int **p = cria_matriz(tam);
+    int i,j,preenc;
 
     if(p){
 
-        preenchida = preenche_matriz(p,5);
-    
-        if(preenchida){
-    
-            for(i = 0; i<5;i++){
+        preenc = preenche_matriz(p,tam);
+
+        if(preenc){
+
+            for(i = 0; i<tam;i++){
+
                 printf("Linha %d: ",i+1);
-                for(j = 0; j<5; j++){
-                    printf("%d ",acessa(p,5,i,j));
+
+                for(j = 0; j<tam;j++){
+
+                    printf("%d ",acessa(p,tam,i,j));
                 }
-        
+
                 printf("\n");
             }
 
-            libera_matriz(p,5);
-        }else{
-            printf("Houve uma falha no preenchimento da matriz\n");
         }
-
-    }else{
-        printf("Houve uma falha na alocacao da memoria\n");
+        libera_matriz(p,tam);
     }
 
     return 0;
